@@ -14,6 +14,7 @@ public class Solution303 {
             for (int i = 1; i < nums.length; i++) {
                 sum += nums[i];
                 dp[i] = sum;
+                //test
             }
         }
 
