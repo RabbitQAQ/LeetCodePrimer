@@ -1,2 +1,2 @@
 # LeetCodePrimer
-If it can help...
+A noob's struggle.
