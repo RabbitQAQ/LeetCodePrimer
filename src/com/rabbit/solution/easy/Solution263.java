@@ -4,7 +4,7 @@ public class Solution263 {
     public static boolean isUgly(int num) {
         if (num == 1) {
             return true;
-        } else if (num < 0) {
+        } else if (num <= 0) {
             return false;
         }
         while (num > 1) {
