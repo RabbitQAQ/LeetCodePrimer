@@ -1,4 +1,4 @@
-package com.rabbit.solution.easy.utils;
+package com.rabbit.solution.utils;
 
 import java.util.List;
 

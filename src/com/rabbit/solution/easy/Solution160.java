@@ -1,6 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.ListNode;
+import com.rabbit.solution.utils.ListNode;
 
 public class Solution160 {
     // 巧妙的解法  先遍历链表获取长度  然后将长的那个链表初始节点向后推差值的长度即可

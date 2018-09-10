@@ -1,7 +1,7 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.ListNode;
-import com.rabbit.solution.easy.utils.Utils;
+import com.rabbit.solution.utils.ListNode;
+import com.rabbit.solution.utils.Utils;
 
 public class Solution206 {
     // Reverse Linked List

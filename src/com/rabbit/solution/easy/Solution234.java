@@ -1,6 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.ListNode;
+import com.rabbit.solution.utils.ListNode;
 
 import java.util.Stack;
 

@@ -1,6 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.TreeNode;
+import com.rabbit.solution.utils.TreeNode;
 
 public class Solution235 {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {

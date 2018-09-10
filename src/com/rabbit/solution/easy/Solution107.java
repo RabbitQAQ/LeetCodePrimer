@@ -1,7 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.TreeNode;
-import sun.reflect.generics.tree.Tree;
+import com.rabbit.solution.utils.TreeNode;
 
 import java.util.*;
 

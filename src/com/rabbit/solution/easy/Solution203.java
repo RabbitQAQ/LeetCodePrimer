@@ -1,6 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.ListNode;
+import com.rabbit.solution.utils.ListNode;
 
 public class Solution203 {
     public ListNode removeElements(ListNode head, int val) {

@@ -1,6 +1,6 @@
 package com.rabbit.solution.easy;
 
-import com.rabbit.solution.easy.utils.TreeNode;
+import com.rabbit.solution.utils.TreeNode;
 
 public class Solution108 {
     public static TreeNode sortedArrayToBST(int[] nums) {

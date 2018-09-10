@@ -1,7 +1,7 @@
 package com.rabbit.solution.easy;
 
 
-import com.rabbit.solution.easy.utils.ListNode;
+import com.rabbit.solution.utils.ListNode;
 
 public class Solution021 {
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
