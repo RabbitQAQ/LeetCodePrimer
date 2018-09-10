@@ -13,6 +13,7 @@ public class Solution003 {
             } else {
                 left = hashMap[s.charAt(i)];
             }
+            // 这个其实也就是为了=0这个条件能成立
             hashMap[s.charAt(i)] = i + 1;
         }
 
