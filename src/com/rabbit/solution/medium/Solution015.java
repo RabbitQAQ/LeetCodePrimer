@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Solution015 {
+    // 打了无数补丁的傻屌代码
     public static List<List<Integer>> threeSum(int[] nums) {
         if (nums.length == 0) {
             return new ArrayList<>();
