@@ -47,5 +47,8 @@ public class Solution034 {
     public static void main(String[] args) {
         int[] fuck = {5,7,7,8,8,10};
         System.out.println(searchRange(fuck, 8)[0] + " " + searchRange(fuck, 8)[1]);
+
+        Map<String, Integer> map = new HashMap<>();
+
     }
 }
