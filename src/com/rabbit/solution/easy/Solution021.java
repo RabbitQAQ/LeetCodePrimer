@@ -3,6 +3,8 @@ package com.rabbit.solution.easy;
 
 import com.rabbit.solution.utils.ListNode;
 
+import java.util.List;
+
 public class Solution021 {
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) {
