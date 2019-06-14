@@ -1,29 +1,25 @@
 package com.rabbit.solution.easy;
 
 import java.util.HashMap;
+import java.util.Map;
+
+/*
+    #001 Two Sum
+    Two Sum作为LeetCode第一题被刷了无数遍，但是代码上其实还是有很多可以优化的
+ */
 
 public class Solution001 {
 
     public static int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
+        Map<Integer, Integer> hashMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            hashMap.put(nums[i], i);
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (hashMap.get(target - nums[i]) != null && hashMap.get(target - nums[i]) != i) {
-                int[] result = new int[2];
-                result[0] = i;
-                result[1] = hashMap.get(target - nums[i]);
-
-                return result;
+            if (hashMap.containsKey(target - nums[i])) {
+                return new int[] {i, hashMap.get(target - nums[i])};
+            } else {
+                hashMap.put(nums[i], i);
             }
         }
-
         return null;
     }
 
-    public static void main(String[] args) {
-        int[] array = {3, 2, 4};
-        System.out.println(twoSum(array, 6)[0] + " " + twoSum(array, 6)[1]);
-    }
 }

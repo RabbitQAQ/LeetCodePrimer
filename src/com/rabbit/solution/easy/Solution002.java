@@ -3,88 +3,29 @@ package com.rabbit.solution.easy;
 import com.rabbit.solution.utils.ListNode;
 
 public class Solution002 {
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode root = l1;
-        ListNode prev = null;
-        int flag = 0;
-        while (l1 != null) {
-            if (l2 == null) {
-                int sum3 = l1.val + flag;
-                if (sum3 >= 10) {
-                    flag = 1;
-                } else {
-                    flag = 0;
-                }
-                l1.val = sum3 % 10;
-                prev = l1;
-                l1 = l1.next;
-                continue;
-            }
-
-            int sum = l1.val + l2.val + flag;
-            if (sum >= 10) {
-                flag = 1;
-            } else {
-                flag = 0;
-            }
-
-            l1.val = sum % 10;
-
-            if (l1.next == null) {
-                l1.next = l2.next;
-                prev = l1;
-                l1 = l1.next;
-                while (l1 != null) {
-                    int sum2 = l1.val + flag;
-                    if (sum2 >= 10) {
-                        flag = 1;
-                    } else {
-                        flag = 0;
-                    }
-                    l1.val = sum2 % 10;
-                    prev = l1;
-                    l1 = l1.next;
-                }
-            } else {
-                prev = l1;
-                l1 = l1.next;
-                l2 = l2.next;
-            }
-
-        }
-
-        if (flag == 1) {
-            prev.next = new ListNode(1);
-        }
-
-        return root;
-    }
-
-    // 一个值得参考的简洁解法 非常棒
-    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
-        ListNode prev = new ListNode(0);
-        ListNode head = prev;
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(-1);
+        ListNode res = dummyHead;
+        // Doesn't want to modify l1 and l2, make replica of them
+        ListNode t1 = l1;
+        ListNode t2 = l2;
         int carry = 0;
-        while (l1 != null || l2 != null || carry != 0) {
-            ListNode cur = new ListNode(0);
-            int sum = ((l2 == null) ? 0 : l2.val) + ((l1 == null) ? 0 : l1.val) + carry;
-            cur.val = sum % 10;
+        // Traverse two listnode
+        while(l1 != null || l2 != null) {
+            int sum = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + carry;
             carry = sum / 10;
-            prev.next = cur;
-            prev = cur;
-
-            l1 = (l1 == null) ? l1 : l1.next;
-            l2 = (l2 == null) ? l2 : l2.next;
+            res.next = new ListNode(sum % 10);
+            if (l1 != null)
+                l1 = l1.next;
+            if (l2 != null)
+                l2 = l2.next;
+            res = res.next;
         }
-        return head.next;
-    }
 
-    public static void main(String[] args) {
-        ListNode t1 = new ListNode(1);
-        ListNode t2 = new ListNode(9);
-        ListNode t3 = new ListNode(9);
-        t2.next = t3;
+        if (carry == 1) {
+            res.next = new ListNode(1);
+        }
 
-        System.out.println(addTwoNumbers(t1, t2));
+        return dummyHead.next;
     }
 }

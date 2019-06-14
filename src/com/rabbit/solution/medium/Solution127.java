@@ -3,11 +3,11 @@ package com.rabbit.solution.medium;
 import java.util.*;
 
 public class Solution127 {
-    // 草 超时了
     public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (!wordList.contains(endWord)) {
             return 0;
         }
+        HashSet<String> set = new HashSet<>(wordList);
         HashMap<String, Integer> hashMap = new HashMap<>();
         Queue<String> bfsQueue = new LinkedList<>();
         int wordCount = 0;
@@ -26,7 +26,7 @@ public class Solution127 {
                         if (currBuffer.toString().equals(endWord)) {
                             return ++count;
                         }
-                        if (wordList.contains(currBuffer.toString()) && !hashMap.containsKey(currBuffer.toString())) {
+                        if (set.contains(currBuffer.toString()) && !hashMap.containsKey(currBuffer.toString())) {
                             bfsQueue.offer(currBuffer.toString());
                             hashMap.put(currBuffer.toString(), 1);
                         }

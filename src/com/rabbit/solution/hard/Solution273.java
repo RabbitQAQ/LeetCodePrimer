@@ -65,6 +65,8 @@ public class Solution273 {
 
     public static void main(String[] args) {
         //System.out.println(convert("12",0));
-        System.out.println(numberToWords(1000010));
+        //System.out.println(numberToWords(1000010));
+        System.out.println(Integer.MIN_VALUE);
+        System.out.println(Integer.MIN_VALUE % 1000);
     }
 }
