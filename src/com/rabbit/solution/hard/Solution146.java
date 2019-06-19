@@ -6,38 +6,43 @@ import javafx.util.Pair;
 import java.util.*;
 class LRUNode {
     int key;
-    int value;
+    int val;
     LRUNode prev;
     LRUNode next;
-    LRUNode(int k, int v, LRUNode p, LRUNode n) {
-        key = k;
-        value = v;
-        prev = p;
-        next = n;
+
+    public LRUNode(int key, int val) {
+        this.key = key;
+        this.val = val;
+        this.prev = null;
+        this.next = null;
     }
 }
 
 class LRUCache {
+
     Map<Integer, LRUNode> quickMap;
-    int capacity;
-    int count;
     LRUNode head;
     LRUNode tail;
+    int capacity;
+    int count;
 
     public LRUCache(int capacity) {
-        quickMap = new HashMap<>();
-        head = new LRUNode(0, 0, null, tail);
-        tail = new LRUNode(0, 0, head, null);
+        // init
         this.capacity = capacity;
         count = 0;
+        quickMap = new HashMap<>();
+        head = new LRUNode(-1, -1);
+        tail = new LRUNode(-1, -1);
+        head.next = tail;
+        tail.prev = head;
     }
 
     public int get(int key) {
         if (quickMap.containsKey(key)) {
-            LRUNode curr = quickMap.get(key);
-            deleteNode(curr);
-            moveNodeToHead(curr);
-            return curr.value;
+            LRUNode tmpNode = quickMap.get(key);
+            deleteNode(tmpNode);
+            moveNodeToHead(tmpNode);
+            return tmpNode.val;
         } else {
             return -1;
         }
@@ -45,30 +50,29 @@ class LRUCache {
 
     public void put(int key, int value) {
         if (quickMap.containsKey(key)) {
-            LRUNode curr = quickMap.get(key);
-            curr.value = value;
-            deleteNode(curr);
-            moveNodeToHead(curr);
+            LRUNode tmpNode = quickMap.get(key);
+            tmpNode.val = value;
+            deleteNode(tmpNode);
+            moveNodeToHead(tmpNode);
         } else {
-            LRUNode newNode = new LRUNode(key, value, null, null);
+            LRUNode newNode = new LRUNode(key, value);
+            quickMap.put(key, newNode);
             moveNodeToHead(newNode);
             if (++count > capacity) {
                 quickMap.remove(tail.prev.key);
                 deleteNode(tail.prev);
-                count--;
             }
-            quickMap.put(key, newNode);
         }
     }
 
-    public void deleteNode(LRUNode node) {
+    private void deleteNode(LRUNode node) {
         node.prev.next = node.next;
         node.next.prev = node.prev;
     }
 
-    public void moveNodeToHead(LRUNode node) {
-        node.next = head.next;
+    private void moveNodeToHead(LRUNode node) {
         head.next.prev = node;
+        node.next = head.next;
         head.next = node;
         node.prev = head;
     }
@@ -78,6 +82,9 @@ public class Solution146 {
     public static void main(String[] args) {
         LRUCache c = new LRUCache(2);
         c.put(1,1);
+        c.put(2,2);
+        c.get(1);
+        c.put(3,3);
     }
 }
 
