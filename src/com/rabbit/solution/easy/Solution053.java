@@ -8,7 +8,7 @@ public class Solution053 {
         }
         int currLeft = 0;
         int maxLeft = Integer.MIN_VALUE;
-        for (int i = mid; i > left; i--) {
+        for (int i = mid; i >= left; i--) {
             currLeft += nums[i];
             maxLeft = Math.max(currLeft, maxLeft);
         }
@@ -28,8 +28,8 @@ public class Solution053 {
             return nums[left];
         }
         int mid = (left + right) / 2;
-        int maxLeft = helper(nums, left, mid - 1);
-        int maxRight = helper(nums, right, mid + 1);
+        int maxLeft = helper(nums, left, mid);
+        int maxRight = helper(nums, mid + 1, right);
         int maxCross = crossSum(nums, left, right, mid);
 
         return Math.max(maxCross, Math.max(maxLeft, maxRight));
