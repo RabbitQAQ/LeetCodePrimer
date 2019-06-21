@@ -1,43 +1,25 @@
 package com.rabbit.solution.easy;
 
-public class Solution020 {
-    public static boolean isValid(String s) {
-        if (s.isEmpty()) {
-            return true;
-        }
+import java.util.Stack;
 
-        String popStack = "";
+public class Solution020 {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
-            switch (s.charAt(i)) {
-                case '(' : popStack += '('; break;
-                case '{' : popStack += '{'; break;
-                case '[' : popStack += '['; break;
-                case ')' : if (!popStack.isEmpty() && popStack.charAt(popStack.length() - 1) == '(') {
-                    popStack = popStack.substring(0, popStack.length() - 1);
-                } else {
-                    return false;
-                } break;
-                case '}' : if (!popStack.isEmpty() && popStack.charAt(popStack.length() - 1) == '{') {
-                    popStack = popStack.substring(0, popStack.length() - 1);
-                } else {
-                    return false;
-                } break;
-                case ']' : if (!popStack.isEmpty() && popStack.charAt(popStack.length() - 1) == '[') {
-                    popStack = popStack.substring(0, popStack.length() - 1);
-                } else {
-                    return false;
-                } break;
+            char tmp = s.charAt(i);
+            if (tmp == '(' || tmp == '[' || tmp == '{') {
+                stack.push(tmp);
+                continue;
+            }
+            if (stack.isEmpty())
+                return false;
+            char top = stack.pop();
+            if ((tmp == ')' && top != '(') ||(tmp == ']' && top != '[') || (tmp == '}' && top != '{') ) {
+                return false;
             }
         }
 
-        if (popStack.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return stack.isEmpty();
     }
 
-    public static void main(String[] args) {
-        System.out.println(isValid("[()](())"));
-    }
 }
