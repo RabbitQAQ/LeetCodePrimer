@@ -41,14 +41,10 @@ public class Solution002 {
                 r--;
             if (l >= r)
                 break;
-            int tmp = input[l];
-            input[l] = input[r];
-            input[r] = tmp;
+            swap(input, l, r);
         }
 
-        int tmp = input[start];
-        input[start] = input[r];
-        input[r] = tmp;
+        swap(input, start, r);
         quickSort(input, start, r - 1);
         quickSort(input, r + 1, end);
     }
