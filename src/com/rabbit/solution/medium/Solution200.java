@@ -1,5 +1,7 @@
 package com.rabbit.solution.medium;
 
+import java.util.Arrays;
+
 public class Solution200 {
     public int numIslands(char[][] grid) {
         if (grid.length == 0) {

@@ -1,5 +1,6 @@
 package com.rabbit.solution.medium;
 
+import javax.sound.midi.Soundbank;
 import java.util.Arrays;
 
 public class Solution973 {
@@ -47,4 +48,5 @@ public class Solution973 {
         points[j][0] = tmpx;
         points[j][1] = tmpy;
     }
+
 }

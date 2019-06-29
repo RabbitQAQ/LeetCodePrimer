@@ -1,60 +1,45 @@
 package com.rabbit.solution.medium;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Solution015 {
-    // 打了无数补丁的傻屌代码
-    public static List<List<Integer>> threeSum(int[] nums) {
-        if (nums.length == 0) {
+    public List<List<Integer>> threeSum(int[] nums) {
+        if (nums.length < 3) {
             return new ArrayList<>();
         }
+        Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();
-        List<Integer> numbers = new ArrayList<>();
-        for (int i : nums) {
-            numbers.add(i);
-        }
-        Collections.sort(numbers);
-        int prefix = Integer.MIN_VALUE;
-        int prel = Integer.MIN_VALUE;
-        int prer = Integer.MIN_VALUE;
-        for (int i = 0; i < numbers.size() - 2; i++) {
-            if (numbers.get(i) > 0) {
+        for (int i = 0; i < nums.length - 2; ) {
+            if (nums[i] > 0) {
                 break;
             }
-            int fix = numbers.get(i);
-            if (fix == prefix) {
-                continue;
-            }
+            int fix = nums[i];
+            int target = -fix;
             int l = i + 1;
-            int r = numbers.size() - 1;
+            int r = nums.length - 1;
+            while (i < nums.length && nums[i] == fix) {
+                i++;
+            }
+            // now it's a two sum problem with sorted array, use two pointer
             while (l < r) {
-                if (fix + numbers.get(l) + numbers.get(r) == 0 && (numbers.get(l) != prel || numbers.get(r) != prer)) {
-                    ArrayList<Integer> temp = new ArrayList<>();
-                    temp.add(fix);
-                    temp.add(numbers.get(l));
-                    temp.add(numbers.get(r));
-                    prel = numbers.get(l);
-                    prer = numbers.get(r);
-                    res.add(temp);
-                    --r;
-                    ++l;
-                } else if (numbers.get(l) + numbers.get(r) > 0 - fix) {
-                    --r;
+                if (nums[l] + nums[r] == target) {
+                    res.add(Arrays.asList(fix, nums[l], nums[r]));
+                    while (l < r && nums[l] == nums[l + 1]) {
+                        l++;
+                    }
+                    while (l < r && nums[r] == nums[r - 1]) {
+                        r--;
+                    }
+                    l++;
+                    r--;
+                } else if (nums[l] + nums[r] < target) {
+                    l++;
                 } else {
-                    ++l;
+                    r--;
                 }
             }
-            prefix = fix;
         }
 
         return res;
-    }
-
-    public static void main(String[] args) {
-        int[] testcase = {3,0,-2,-1,1,2};
-        System.out.println(threeSum(testcase));
     }
 }
