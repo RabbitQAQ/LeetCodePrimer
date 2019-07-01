@@ -1,18 +1,16 @@
 package com.rabbit.solution.easy;
 
 public class Solution121 {
-    public static int maxProfit(int[] prices) {
-        int profit = 0;
-        int buyPrice = Integer.MAX_VALUE;
-        for (int i = 0; i < prices.length; i++) {
-            buyPrice = Math.min(buyPrice, prices[i]);
-            profit = Math.max(prices[i] - buyPrice, profit);
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) {
+            return 0;
         }
-
-        return profit;
-    }
-
-    public static void main(String[] args) {
-
+        int low = prices[0];
+        int res = 0;
+        for (int i = 1; i < prices.length; i++) {
+            low = Math.min(low, prices[i]);
+            res = Math.max(res, prices[i] - low);
+        }
+        return res;
     }
 }
