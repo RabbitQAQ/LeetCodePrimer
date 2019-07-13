@@ -3,50 +3,30 @@ package com.rabbit.solution.medium;
 import com.rabbit.solution.utils.Interval;
 import com.rabbit.solution.utils.ListNode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Solution056 {
-    public static List<Interval> merge(List<Interval> intervals) {
-        if (intervals.size() == 0) {
-            return new ArrayList<>();
-        }
-        Collections.sort(intervals, new Comparator<Interval>() {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
-            public int compare(Interval o1, Interval o2) {
-                return o1.start - o2.start;
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
             }
         });
-
-        List<Interval> res = new ArrayList<>();
-        res.add(intervals.get(0));
-        for (int i = 1; i < intervals.size(); i++) {
-            Interval prev = res.get(res.size() - 1);
-            Interval temp = intervals.get(i);
-            if (prev.end >= temp.start) {
-                res.remove(prev);
-                res.add(new Interval(prev.start, temp.end > prev.end ? temp.end : prev.end));
+        Stack<int[]> stack = new Stack<>();
+        for (int i = 0; i < intervals.length; i++) {
+            if (stack.isEmpty() || stack.peek()[1] < intervals[i][0]) {
+                stack.push(intervals[i]);
             } else {
-                res.add(temp);
+                stack.peek()[1] = Math.max(intervals[i][1], stack.peek()[1]);
             }
         }
-
+        int[][] res = new int[stack.size()][2];
+        for (int i = res.length - 1; i >= 0; i--) {
+            int[] tmp = stack.pop();
+            res[i][0] = tmp[0];
+            res[i][1] = tmp[1];
+        }
         return res;
-    }
-
-    public static void main(String[] args) {
-        Interval t1 = new Interval(1,3);
-        Interval t2 = new Interval(2,6);
-        Interval t3 = new Interval(8,10);
-        Interval t4 = new Interval(15,18);
-        List<Interval> testcase = new ArrayList<>();
-        testcase.add(t1);
-        testcase.add(t2);
-        testcase.add(t3);
-        testcase.add(t4);
-        List<Interval> res = merge(testcase);
-        System.out.println(res);
     }
 }

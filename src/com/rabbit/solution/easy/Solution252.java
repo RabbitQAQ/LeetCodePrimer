@@ -6,34 +6,18 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class Solution252 {
-    public static boolean canAttendMeetings(Interval[] intervals) {
-        if (intervals.length == 1) {
-            return true;
-        }
-        Arrays.sort(intervals, new Comparator<Interval>() {
+    public boolean canAttendMeetings(int[][] intervals) {
+        Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
-            public int compare(Interval o1, Interval o2) {
-                if (o1.start == o2.start) return 0;
-                return o1.start < o2.start ? -1 : 1;
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
             }
         });
-
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i].start < intervals[i - 1].end)
+            if (intervals[i - 1][1] > intervals[i][0]) {
                 return false;
+            }
         }
-
         return true;
-    }
-
-    public static void main(String[] args) {
-        Interval test1 = new Interval();
-        test1.start = 7;
-        test1.end = 10;
-        Interval test2 = new Interval();
-        test2.start = 2;
-        test2.end = 4;
-        Interval[] testcase = {test1, test2};
-        canAttendMeetings(testcase);
     }
 }

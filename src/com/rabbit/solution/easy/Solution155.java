@@ -19,34 +19,36 @@ public class Solution155 {
 }
 
 class MinStack {
-    private Stack<Integer> normalStack;
-    private Stack<Integer> minStack;
+
+    Stack<Integer> minStack;
+    int minVal;
 
     /** initialize your data structure here. */
     public MinStack() {
-        normalStack = new Stack<>();
-        minStack = new Stack<>();
+        minStack = new Stack<Integer>();
+        minVal = Integer.MAX_VALUE;
     }
 
     public void push(int x) {
-        normalStack.push(x);
-        if (minStack.isEmpty() || x <= minStack.peek()) {
-            minStack.push(x);
+        if (x <= minVal) {
+            minStack.push(minVal);
+            minVal = x;
         }
+        minStack.push(x);
     }
 
     public void pop() {
-        if (normalStack.peek().equals(minStack.peek())) {
-            minStack.pop();
+        int top = minStack.pop();
+        if (top == minVal) {
+            minVal = minStack.pop();
         }
-        normalStack.pop();
     }
 
     public int top() {
-        return normalStack.peek();
+        return minStack.peek();
     }
 
     public int getMin() {
-        return minStack.peek();
+        return minVal;
     }
 }

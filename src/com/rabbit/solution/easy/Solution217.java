@@ -1,24 +1,20 @@
 package com.rabbit.solution.easy;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Solution217 {
-    public static boolean containsDuplicate(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+    public boolean containsDuplicate(int[] nums) {
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
-            if (map.containsKey(nums[i])) {
+            if (set.contains(nums[i])) {
                 return true;
             } else {
-                map.put(nums[i], 1);
+                set.add(nums[i]);
             }
         }
-
         return false;
-    }
-
-    public static void main(String[] args) {
-        int[] array = {1,2,3,1};
-        System.out.println(containsDuplicate(array));
     }
 }

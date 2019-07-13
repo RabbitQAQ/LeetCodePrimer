@@ -2,19 +2,17 @@ package com.rabbit.solution.easy;
 
 public class Solution283 {
     public void moveZeroes(int[] nums) {
-        int count = 0;
+        int index = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
-                nums[count] = nums[i];
-                count++;
+                swap(nums, index++, i);
             }
-        }
-        for (int i = count; i < nums.length; i++) {
-            nums[i] = 0;
         }
     }
 
-    public static void main(String[] args) {
-
+    public void swap(int[] nums, int l, int r) {
+        int tmp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = tmp;
     }
 }

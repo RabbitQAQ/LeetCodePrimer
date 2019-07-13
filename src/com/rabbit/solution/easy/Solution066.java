@@ -4,48 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Solution066 {
-    public static int[] plusOne(int[] digits) {
-        if (digits.length == 0) {
-            return null;
-        }
-        ArrayList<Integer> result = new ArrayList<>();
-        int flag = 0;
+    public int[] plusOne(int[] digits) {
+        int carry = 0;
         for (int i = digits.length - 1; i >= 0; i--) {
-            if (i == digits.length - 1) {
-                digits[i] = digits[i] + 1 + flag;
-            } else {
-                digits[i] = digits[i] + flag;
+            if (carry == 0 && i != digits.length - 1) {
+                return digits;
             }
-
-            if (digits[i] >= 10) {
-                digits[i] = 0;
-                flag = 1;
-            } else {
-                flag = 0;
+            int add = (i == digits.length - 1 ? 1 : 0);
+            int sum = digits[i] + add + carry;
+            digits[i] = sum % 10;
+            carry = sum / 10;
+        }
+        if (carry != 0) {
+            int[] res = new int[digits.length + 1];
+            res[0] = 1;
+            for (int i = 1; i < res.length; i++) {
+                res[i] = digits[i - 1];
             }
-
-            result.add(digits[i]);
-        }
-
-        if (flag != 0) {
-            result.add(flag);
-        }
-
-        Collections.reverse(result);
-
-        int[] intResult = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            intResult[i] = result.get(i);
-        }
-
-        return intResult;
-    }
-
-    public static void main(String[] args) {
-        int[] nums = {9, 9, 9};
-        int[] result = plusOne(nums);
-        for (int i = 0; i < result.length; i++) {
-            System.out.print(result[i] + " ");
+            return res;
+        } else {
+            return digits;
         }
     }
 }

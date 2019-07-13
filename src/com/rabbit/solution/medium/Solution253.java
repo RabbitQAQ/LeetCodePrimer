@@ -2,44 +2,72 @@ package com.rabbit.solution.medium;
 
 import com.rabbit.solution.utils.Interval;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Solution253 {
-    public int minMeetingRooms(Interval[] intervals) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        Arrays.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                return o1.start - o2.start;
-            }
-        });
-
+    // Tree Map
+    public int minMeetingRooms(int[][] intervals) {
+        Map<Integer, Integer> map = new TreeMap<>();
         for (int i = 0; i < intervals.length; i++) {
-            if (!queue.isEmpty() && intervals[i].start >= queue.peek()) queue.poll();
-            queue.offer(intervals[i].end);
+            map.put(intervals[i][0], map.getOrDefault(intervals[i][0], 0) + 1);
+            map.put(intervals[i][1], map.getOrDefault(intervals[i][1], 0) - 1);
+        }
+        int currSum = 0;
+        int maxSum = 0;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            currSum += entry.getValue();
+            maxSum = Math.max(maxSum, currSum);
         }
 
-        return queue.size();
+        return maxSum;
     }
 
-    public static void main(String[] args) {
-        Interval test1 = new Interval();
-        test1.start = 2;
-        test1.end = 6;
-        Interval test2 = new Interval();
-        test2.start = 4;
-        test2.end = 7;
-        PriorityQueue<Interval> queue = new PriorityQueue<>(new Comparator<Interval>() {
+    // 2 array
+    public int minMeetingRooms2(int[][] intervals) {
+        List<Integer> startTime = new ArrayList<>();
+        List<Integer> endTime = new ArrayList<>();
+        for (int i = 0; i < intervals.length; i++) {
+            startTime.add(intervals[i][0]);
+            endTime.add(intervals[i][1]);
+        }
+        Collections.sort(startTime);
+        Collections.sort(endTime);
+        int max = 0;
+        int currSum = 0;
+        int j = 0;
+        for (int i = 0; i < intervals.length; ) {
+            if (startTime.get(i) < endTime.get(j)) {
+                currSum++;
+                i++;
+            } else {
+                currSum--;
+                j++;
+            }
+            max = Math.max(max, currSum);
+        }
+
+        return max;
+    }
+
+    // PQ
+    public int minMeetingRooms3(int[][] intervals) {
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+        Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
-            public int compare(Interval o1, Interval o2) {
-                return o2.start - o1.start;
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
             }
         });
-
-        queue.offer(test2);
-        queue.offer(test1);
-        System.out.println(queue);
+        for (int i = 0; i < intervals.length; i++) {
+            if (!pq.isEmpty()) {
+                if (pq.peek() <= intervals[i][0]) {
+                    pq.poll();
+                }
+                pq.offer(intervals[i][1]);
+            } else {
+                pq.offer(intervals[i][1]);
+            }
+        }
+        return pq.size();
     }
 }
