@@ -3,18 +3,24 @@ package com.rabbit.solution.medium;
 import com.rabbit.solution.utils.TreeNode;
 
 public class Solution098 {
-    public static boolean isValidBST(TreeNode root) {
-        return check(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
     }
 
-    public static boolean check(TreeNode curr, long min, long max) {
-        if (curr == null) {
+    public boolean helper(TreeNode root, Integer min, Integer max) {
+        if (root == null) {
             return true;
         }
-        return curr.val < max && curr.val > min && check(curr.left, min, curr.val) && check(curr.right, curr.val, max);
-    }
-
-    public static void main(String[] args) {
-
+        boolean curr = false;
+        if ((min == null || root.val > min) && (max == null || root.val < max)) {
+            curr = true;
+        }
+        if (curr) {
+            boolean left = helper(root.left, min, root.val);
+            boolean right = helper(root.right, root.val, max);
+            return left && right;
+        } else {
+            return false;
+        }
     }
 }

@@ -4,35 +4,21 @@ import com.rabbit.solution.utils.ListNode;
 
 public class Solution203 {
     public ListNode removeElements(ListNode head, int val) {
-        if (head == null) {
-            return head;
-        }
-        ListNode result = head;
-        ListNode prev = head;
-        ListNode curr = head;
-        while (curr != null) {
-            if (prev == curr) {
-                if (prev.val == val) {
-                    result = curr.next;
-                    prev = curr.next;
-                    curr = curr.next;
-                } else {
-                    curr = curr.next;
-                }
+        ListNode tmp = head;
+        ListNode dummyHead = new ListNode(-1);
+        dummyHead.next = tmp;
+        ListNode prev = dummyHead;
+        while (tmp != null) {
+            if (tmp.val == val) {
+                prev.next = tmp.next;
+                tmp = tmp.next;
                 continue;
             }
-
-            if (curr.val == val) {
-                prev.next = curr.next;
-                curr = curr.next;
-            } else {
-                prev = curr;
-                curr = curr.next;
-            }
-
+            prev = prev.next;
+            tmp = tmp.next;
         }
 
-        return result;
+        return dummyHead.next;
     }
 
     // 递归解法 非常简洁  边界条件也控制的很好  叹为观止

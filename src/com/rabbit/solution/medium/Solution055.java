@@ -1,33 +1,36 @@
 package com.rabbit.solution.medium;
 
 public class Solution055 {
-    public static boolean canJump(int[] nums) {
+    // 改进思路 很快
+    public boolean canJump2(int[] nums) {
+        int max = 0;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (max < i) {
+                return false;
+            }
+            max = Math.max(max, i + nums[i]);
+        }
+        return max >= nums.length - 1;
+    }
+
+    // 原始思路  很慢
+    public boolean canJump(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
         for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
-                // backward
-                if (i == 0) {
-                    return nums.length == 1;
-                }
-                boolean flag = false;
-                for (int j = i - 1; j >= 0; j--) {
-                    if (nums[j] + j > i || nums[j] + j >= nums.length - 1) {
-                        flag = true;
+            if (dp[i] == 1) {
+                for (int j = 1; j <= nums[i]; j++) {
+                    if (i + j < nums.length) {
+                        if (dp[i + j] == 0) {
+                            dp[i + j] = 1;
+                        }
+                    } else {
                         break;
                     }
                 }
-                if (!flag) {
-                    if (i != nums.length - 1)
-                        return false;
-                }
-
             }
         }
 
-        return true;
-    }
-
-    public static void main(String[] args) {
-        int[] testcase = {2,0,0};
-        System.out.println(canJump(testcase));
+        return dp[nums.length - 1] == 1;
     }
 }

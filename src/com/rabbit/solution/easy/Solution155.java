@@ -4,17 +4,8 @@ import java.util.Stack;
 
 public class Solution155 {
     public static void main(String[] args) {
-        MinStack minStack = new MinStack();
-        minStack.push(512);
-        minStack.push(-1024);
-        minStack.push(-1024);
-        minStack.push(512);
-        minStack.pop();
-        System.out.println(minStack.getMin());
-        minStack.pop();
-        System.out.println(minStack.getMin());
-        minStack.pop();
-        System.out.println(minStack.getMin());
+        Stack<Integer> stack = new Stack<>();
+        stack.pop();
     }
 }
 
@@ -50,5 +41,38 @@ class MinStack {
 
     public int getMin() {
         return minVal;
+    }
+}
+
+class MinStack2 {
+    Stack<Integer> minStack;
+    Stack<Integer> normalStack;
+
+    /** initialize your data structure here. */
+    public MinStack2() {
+        minStack = new Stack<>();
+        normalStack = new Stack<>();
+    }
+
+    public void push(int x) {
+        if (minStack.isEmpty() || x <= minStack.peek()) {
+            minStack.push(x);
+        }
+        normalStack.push(x);
+    }
+
+    public void pop() {
+        int tmp = normalStack.pop();
+        if (tmp == minStack.peek()) {
+            minStack.pop();
+        }
+    }
+
+    public int top() {
+        return normalStack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
     }
 }

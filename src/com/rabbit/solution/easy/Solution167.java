@@ -1,25 +1,17 @@
 package com.rabbit.solution.easy;
 
 public class Solution167 {
-    public static int[] twoSum(int[] numbers, int target) {
-        int i = 0, j = numbers.length - 1;
-        while (i <= j) {
-            int sum = numbers[i] + numbers[j];
-            if (sum == target) {
-                int[] result = { i + 1, j + 1};
-                return result;
-            } else if (sum < target) {
-                i++;
+    public int[] twoSum(int[] numbers, int target) {
+        int l = 0, r = numbers.length - 1;
+        while (l < r) {
+            if (numbers[l] + numbers[r] == target) {
+                return new int[] {l + 1, r + 1};
+            } else if (numbers[l] + numbers[r] < target) {
+                l++;
             } else {
-                j--;
+                r--;
             }
         }
-
-        return null;
-    }
-
-    public static void main(String[] args) {
-        int[] input = {2,7,11,15};
-        System.out.println(twoSum(input, 9));
+        return new int[2];
     }
 }
