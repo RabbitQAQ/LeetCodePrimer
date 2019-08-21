@@ -6,37 +6,33 @@ import java.util.*;
 
 public class Solution103 {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
         List<List<Integer>> res = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         boolean isZigzag = false;
         while (!queue.isEmpty()) {
-            List<Integer> temp = new ArrayList<>();
-            int currSize = queue.size();
-            for (int i = 0; i < currSize; i++) {
-                TreeNode currNode = queue.poll();
-                if (currNode != null) {
-                    temp.add(currNode.val);
-                    queue.offer(currNode.left);
-                    queue.offer(currNode.right);
+            int length = queue.size();
+            List<Integer> tmp = new ArrayList<>();
+            for (int i = 0; i < length; i++) {
+                TreeNode curr = queue.poll();
+                tmp.add(curr.val);
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
                 }
             }
             if (isZigzag) {
-                Collections.reverse(temp);
-                isZigzag = false;
-            } else {
-                isZigzag = true;
+                Collections.reverse(tmp);
             }
-            if (!temp.isEmpty()) {
-                res.add(temp);
-            }
-
+            isZigzag = !isZigzag;
+            res.add(tmp);
         }
 
         return res;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

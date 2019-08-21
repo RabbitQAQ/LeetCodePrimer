@@ -4,6 +4,7 @@ import com.rabbit.solution.utils.TreeNode;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Solution173 {
     public static void main(String[] args) {
@@ -41,5 +42,35 @@ class BSTIterator {
             return queue.poll().val;
         else
             return -1;
+    }
+}
+
+class BSTIterator2 {
+
+    Stack<TreeNode> stack;
+
+    public BSTIterator2(TreeNode root) {
+        this.stack = new Stack<>();
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode tmp = stack.pop();
+        int res = tmp.val;
+        tmp = tmp.right;
+        while (tmp != null) {
+            stack.push(tmp);
+            tmp = tmp.left;
+        }
+        return res;
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !stack.isEmpty();
     }
 }

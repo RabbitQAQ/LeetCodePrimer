@@ -2,42 +2,29 @@ package com.rabbit.solution.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Solution046 {
-    public static List<List<Integer>> permute(int[] nums) {
-        List<Integer> available = new ArrayList<>();
-        for (int i = 0; i < nums.length; i++) {
-            available.add(0);
-        }
-        List<Integer> out = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        permuteDFS(nums, available, out, res);
+        helper(nums, new int[nums.length], res, new LinkedList<>());
         return res;
     }
 
-    public static void permuteDFS(int[] nums, List<Integer> available, List<Integer> out, List<List<Integer>> res) {
-        if (out.size() == nums.length) {
-            List<Integer> temp = new ArrayList<>();
-            temp.addAll(out);
-            res.add(temp);
+    public void helper(int[] nums, int[] visited, List<List<Integer>> res, LinkedList<Integer> tmp) {
+        if (tmp.size() == nums.length) {
+            res.add(new LinkedList<Integer>(tmp));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
-            if (available.get(i) == 0) {
-                available.set(i, 1);
-                out.add(nums[i]);
-                permuteDFS(nums, available, out, res);
-                out.remove(out.size() - 1);
-                available.set(i, 0);
+            if (visited[i] != 1) {
+                visited[i] = 1;
+                tmp.add(nums[i]);
+                helper(nums, visited, res, tmp);
+                visited[i] = 0;
+                tmp.removeLast();
             }
-
         }
-    }
-
-
-    public static void main(String[] args) {
-        int[] testcase = {1, 2, 3};
-        System.out.println(permute(testcase));
     }
 }

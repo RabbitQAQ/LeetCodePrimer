@@ -5,20 +5,17 @@ import java.util.Map;
 
 public class Solution279 {
     public int numSquares(int n) {
-        while (n % 4 == 0)
-            n /= 4;
-        if (n % 8 == 7)
-            return 4;
-        for (int i = 0; i * i < n; i++) {
-            int j = (int) Math.sqrt(n - i * i);
-            if (j * j + i * i == n)
-                return i == 0 || j == 0 ? 1 : 2;
+        int[] dp = new int[n + 1];
+        for (int i = 0; i < dp.length; i++) {
+            dp[i] = Integer.MAX_VALUE;
+        }
+        dp[0] = 0;
+        for (int i = 0; i <= n; i++) {
+            for (int j = 1; i + j * j <= n; j++) {
+                dp[i + j * j] = Math.min(dp[i + j * j], dp[i] + 1);
+            }
         }
 
-        return 3;
-    }
-
-    public static void main(String[] args) {
-
+        return dp[n];
     }
 }
