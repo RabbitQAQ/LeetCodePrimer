@@ -3,30 +3,46 @@ package com.rabbit.solution.medium;
 import com.rabbit.solution.utils.Utils;
 
 public class Solution215 {
-    public static int partition(int[] nums, int left, int right) {
-        int mem = left;
-        int pivot = nums[left++];
+    public int findKthLargest(int[] nums, int k) {
+        int left = 0;
+        int right = nums.length - 1;
         while (left <= right) {
-            if (nums[left] < pivot && nums[right] > pivot) {
-                int temp = nums[right];
-                nums[right] = nums[left];
-                nums[left] = temp;
+            int mid = partition(nums, left, right);
+            if (mid == k - 1) {
+                return nums[mid];
+            } else if (mid > k - 1) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
             }
-            if (nums[left] >= pivot) ++left;
-            if (nums[right] <= pivot) --right;
         }
 
-        int temp = nums[right];
-        nums[right] = pivot;
-        nums[mem] = temp;
+        return -1;
+    }
 
+    public int partition(int[] nums, int left, int right) {
+        int start = left;
+        int p = nums[left++];
+        while (left <= right) {
+            while (left <= right && nums[left] >= p) {
+                left++;
+            }
+            while (left <= right && nums[right] <= p) {
+                right--;
+            }
+            if (left >= right) {
+                break;
+            }
+            swap(nums, left, right);
+        }
+
+        swap(nums, start, right);
         return right;
     }
 
-    public static void main(String[] args) {
-        int[] test = {4,2,1,3,5,6,7,2,8,9};
-        int i = partition(test, 0, test.length - 1);
-        Utils.printArray(test);
-        System.out.println(i);
+    public void swap(int[] nums, int left, int right) {
+        int tmp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = tmp;
     }
 }

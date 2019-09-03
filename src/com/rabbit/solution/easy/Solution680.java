@@ -2,26 +2,32 @@ package com.rabbit.solution.easy;
 
 public class Solution680 {
     public boolean validPalindrome(String s) {
-        int l = 0, r = s.length() - 1;
-        while (s.charAt(l) == s.charAt(r) && l < r) {
-            l++;
-            r--;
+        int left = 0;
+        int right = s.length() - 1;
+        boolean isDeleted = false;
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                if (isValid(s, left, right - 1) || isValid(s, left + 1, right)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            left++;
+            right--;
         }
-        if (l >= r || isPalindrome(s.substring(l,r))
-                || isPalindrome(s.substring(l + 1, r + 1)))
-            return true;
-        return false;
+
+        return true;
     }
 
-    public boolean isPalindrome(String s) {
-        int l = 0, r = s.length() - 1;
-        while (l < r) {
-            if (s.charAt(l) != s.charAt(r))
+    public boolean isValid(String s, int left, int right) {
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) {
                 return false;
-            l++;
-            r--;
+            }
+            left++;
+            right--;
         }
-
         return true;
     }
 

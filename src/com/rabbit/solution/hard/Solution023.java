@@ -4,6 +4,49 @@ import com.rabbit.solution.utils.ListNode;
 import com.rabbit.solution.utils.Utils;
 
 public class Solution023 {
+
+    // ver 2.0
+    public ListNode mergeKLists2 (ListNode[] lists) {
+        if (lists.length == 0) {
+            return null;
+        } else if (lists.length == 1) {
+            return lists[0];
+        }
+        int n = lists.length - 1;
+        while (n > 0) {
+            int left = 0;
+            int right = n;
+            while (left < right) {
+                lists[left] = mergeTwoLists(lists[left], lists[right]);
+                left++;
+                right--;
+            }
+            n = right;
+        }
+        return lists[0];
+    }
+
+    public ListNode mergeTwoLists(ListNode head1, ListNode head2) {
+        ListNode dummyHead = new ListNode(-1);
+        ListNode tmp = dummyHead;
+        ListNode p1 = head1;
+        ListNode p2 = head2;
+        while (p1 != null || p2 != null) {
+            if (p2 == null ? true : p1 == null ? false : p1.val < p2.val) {
+                tmp.next = p1;
+                p1 = p1.next;
+            } else {
+                tmp.next = p2;
+                p2 = p2.next;
+            }
+            tmp = tmp.next;
+        }
+
+        return dummyHead.next;
+    }
+
+
+    // ver 1.0
     public static ListNode mergeKLists(ListNode[] lists) {
         if (lists.length == 0) {
             return null;
@@ -43,30 +86,5 @@ public class Solution023 {
         }
 
         return root.next;
-    }
-
-    public static void main(String[] args) {
-        ListNode test1 = new ListNode(1);
-        ListNode test2 = new ListNode(4);
-        ListNode test3 = new ListNode(7);
-        ListNode test4 = new ListNode(2);
-        ListNode test5 = new ListNode(5);
-        ListNode test6 = new ListNode(8);
-        ListNode test7 = new ListNode(3);
-        ListNode test8 = new ListNode(6);
-        ListNode test9 = new ListNode(9);
-        test1.next = test2;
-        test2.next = test3;
-        test4.next = test5;
-        test5.next = test6;
-        test7.next = test8;
-        test8.next = test9;
-
-        ListNode[] test = new ListNode[3];
-        test[0] = test1;
-        test[1] = test4;
-        test[2] = test7;
-
-        Utils.printListNode(mergeKLists(test));
     }
 }

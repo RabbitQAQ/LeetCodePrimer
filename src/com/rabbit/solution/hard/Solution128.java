@@ -10,18 +10,24 @@ public class Solution128 {
         for (int i = 0; i < nums.length; i++) {
             set.add(nums[i]);
         }
-        int maxLength = Integer.MIN_VALUE;
+        int maxRes = 0;
         for (int i = 0; i < nums.length; i++) {
             int curr = nums[i];
-            int prev = curr;
-            int next = curr;
-            while (set.contains(prev)) --prev;
-            while (set.contains(next)) ++next;
-            int currLength = next - prev - 1;
-            if (currLength > maxLength)
-                maxLength = currLength;
+            if (set.contains(curr)) {
+                int left = curr - 1;
+                int right = curr + 1;
+                while (set.contains(left)) {
+                    set.remove(left);
+                    left--;
+                }
+                while (set.contains(right)) {
+                    set.remove(right);
+                    right++;
+                }
+                maxRes = Math.max(maxRes, right - left - 1);
+            }
         }
 
-        return maxLength;
+        return maxRes;
     }
 }

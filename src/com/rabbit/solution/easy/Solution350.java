@@ -1,9 +1,6 @@
 package com.rabbit.solution.easy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Solution350 {
     public static int[] intersect(int[] nums1, int[] nums2) {
@@ -32,10 +29,29 @@ public class Solution350 {
 
     }
 
-    public static void main(String[] args) {
-        int[] test1 = {4,9,5};
-        int[] test2 = {9,4,9,8,4};
-        System.out.println(intersect(test1, test2));
+    public int[] intersect2(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int i = 0;
+        int j = 0;
+        List<Integer> res = new ArrayList<>();
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] == nums2[j]) {
+                res.add(nums1[i]);
+                i++;
+                j++;
+            } else if (nums1[i] > nums2[j]) {
+                j++;
+            } else {
+                i++;
+            }
+        }
 
+        int[] trueRes = new int[res.size()];
+        for (int k = 0; k < res.size(); k++) {
+            trueRes[k] = res.get(k);
+        }
+
+        return trueRes;
     }
 }
