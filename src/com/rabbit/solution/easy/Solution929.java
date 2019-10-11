@@ -20,6 +20,18 @@ public class Solution929 {
         return hashset.size();
     }
 
+    public int numUniqueEmails2(String[] emails) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < emails.length; i++) {
+            int indexOfPlus = emails[i].indexOf("+");
+            int indexOfAt = emails[i].indexOf("@");
+            String curr = emails[i].substring(0, indexOfPlus == -1 ? indexOfAt : indexOfPlus).replaceAll("\\.", "") + emails[i].substring(indexOfAt);
+            set.add(curr);
+        }
+
+        return set.size();
+    }
+
     public static void main(String[] args) {
         String[] testcase = {"test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"};
         System.out.println(numUniqueEmails(testcase));
