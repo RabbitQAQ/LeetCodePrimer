@@ -29,6 +29,7 @@ public class Solution079 {
                 helper(board, word, index + 1, i - 1, j, visited) ||
                 helper(board, word, index + 1, i, j + 1, visited) ||
                 helper(board, word, index + 1, i, j - 1, visited);
+        // 注意这一行
         visited[i][j] = false;
         return res;
     }

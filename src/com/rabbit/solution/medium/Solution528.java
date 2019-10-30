@@ -17,6 +17,8 @@ public class Solution528 {
         }
 
         public int pickIndex() {
+            // 注意区间开闭 从[0~最后一个数)
+            // 这也是为什么这种解法能够成立
             int randNum = rand.nextInt(sum[sum.length - 1]);
             int left = 0;
             int right = sum.length - 1;

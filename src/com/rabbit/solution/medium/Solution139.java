@@ -13,6 +13,7 @@ public class Solution139 {
         for (int i = 0; i < wordDict.size(); i++) {
             dict.add(wordDict.get(i));
         }
+        LinkedList ss = new LinkedList();
         return helper(s, 0, dict, memo);
     }
 
