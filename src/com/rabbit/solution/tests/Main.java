@@ -1,4 +1,4 @@
-package com.rabbit.solution.others;
+package com.rabbit.solution.tests;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
