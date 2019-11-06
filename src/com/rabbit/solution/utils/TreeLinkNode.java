@@ -6,4 +6,5 @@ public class TreeLinkNode {
     public TreeLinkNode right;
     public TreeLinkNode next;
     public TreeLinkNode(int x) { val = x; }
+    public TreeLinkNode() {}
 }

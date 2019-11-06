@@ -3,6 +3,9 @@ package com.rabbit.solution.hard;
 import com.rabbit.solution.utils.ListNode;
 import com.rabbit.solution.utils.Utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution023 {
 
     // ver 2.0

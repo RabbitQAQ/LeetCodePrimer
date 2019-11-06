@@ -13,6 +13,7 @@ public class Solution503 {
             while (!stack.isEmpty() && nums[stack.peek()] < curr) {
                 res[stack.pop()] = curr;
             }
+            // 注意后半部分的数组只是为了找出next greater num，不能够push入stack
             if (i < nums.length) {
                 stack.push(i);
             }

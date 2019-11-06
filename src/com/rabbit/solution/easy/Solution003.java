@@ -1,5 +1,8 @@
 package com.rabbit.solution.easy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Solution003 {
     public static int lengthOfLongestSubstring(String s) {
         int res = 0;
@@ -40,7 +43,44 @@ public class Solution003 {
         return res;
     }
 
+    public static int lengthOfLongestSubstring3(String s) {
+        int left = 0;
+        int right = 0;
+        int max = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while (right < s.length()) {
+            char curr = s.charAt(right);
+            if (!map.containsKey(curr) || map.get(curr) <= left) {
+                max = Math.max(max, right - left + 1);
+            } else {
+                left = map.get(curr);
+            }
+            map.put(curr, right + 1);
+            right++;
+        }
+
+        return max;
+    }
+
+    public static int lengthOfLongestSubstring4(String s) {
+        int left = 0;
+        int right = 0;
+        int max = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        while (right < s.length()) {
+            char curr = s.charAt(right);
+            if (map.containsKey(curr) && map.get(curr) >= left) {
+                left = map.get(curr);
+            }
+            max = Math.max(max, right - left + 1);
+            map.put(curr, right + 1);
+            right++;
+        }
+
+        return max;
+    }
+
     public static void main(String[] args) {
-        System.out.println(lengthOfLongestSubstring1(""));
+        System.out.println(lengthOfLongestSubstring4("abba"));
     }
 }
