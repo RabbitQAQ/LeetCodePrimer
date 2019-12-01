@@ -1,6 +1,31 @@
 package com.rabbit.solution.medium;
 
 public class Solution036 {
+    public boolean isValidSudoku2(char[][] board) {
+        StringBuilder res = new StringBuilder();
+
+        boolean[][] rowflag = new boolean[9][9];
+        boolean[][] colflag = new boolean[9][9];
+        boolean[][] boxflag = new boolean[9][9];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == '.') {
+                    continue;
+                } else {
+                    int num = board[i][j] - '1';
+                    if (rowflag[i][num] || colflag[j][num] || boxflag[(i / 3) * 3 + j / 3][num]) {
+                        return false;
+                    }
+                    rowflag[i][num] = true;
+                    colflag[j][num] = true;
+                    boxflag[(i / 3) * 3 + j / 3][num] = true;
+                }
+            }
+        }
+        return true;
+    }
+
+
     public static boolean isValidSudoku(char[][] board) {
          int[][] rows = new int[9][9];
          int[][] cols = new int[9][9];

@@ -16,6 +16,32 @@ class Node {
 
 public class Solution133 {
 
+    /*
+    通过queue遍历所有node，通过map的key来保证不重复访问
+    对于每个node，除了初始化其对应的new node以外，也可以直接初始化其所有neighbor
+    对于后续遍历到的node，它们实际上都已经被new过但未赋值，所以直接从map中取即可
+     */
+
+    public Node cloneGraph3(Node node) {
+        Queue<Node> queue = new LinkedList<>();
+        Map<Node, Node> map = new HashMap<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            Node currNode = queue.poll();
+            map.putIfAbsent(currNode, new Node(currNode.val, new ArrayList<>()));
+            Node newNode = map.get(currNode);
+            for (Node neighbor : currNode.neighbors) {
+                if (!map.containsKey(neighbor)) {
+                    queue.offer(neighbor);
+                }
+                map.putIfAbsent(neighbor, new Node(neighbor.val, new ArrayList<>()));
+                newNode.neighbors.add(map.get(neighbor));
+            }
+        }
+
+        return map.get(node);
+    }
+
     public Node cloneGraph2(Node node) {
         Map<Node, Node> map = new HashMap<>();
         Queue<Node> queue = new LinkedList<>();

@@ -6,33 +6,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 public class Main {
 
-    static int best = Integer.MAX_VALUE;
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int n = scan.nextInt();
-        int x = scan.nextInt();
-        int[] tasks = new int[n];
-        for (int i = 0; i < n; i++) {
-            tasks[i] = scan.nextInt();
-        }
-        for (int y = 1; y <= x; y++) {
-            best = Integer.MAX_VALUE;
-            dfs(tasks, 0, x, y, 0, 0);
-            System.out.println(best);
-        }
-    }
-    public static void dfs(int[] tasks, int index, int x, int y, int aEnd, int bEnd) {
-        if (Math.min(aEnd, bEnd) >= best) {
-            return;
-        }
-        if (index == tasks.length) {
-            best = Math.min(best, Math.max(aEnd, bEnd));
-            return;
-        }
-        dfs(tasks, index + 1, x, y, tasks[index] + x, bEnd);
-        dfs(tasks, index + 1, x, y, aEnd, bEnd <= tasks[index] ? tasks[index] + y : bEnd + y);
-    }
 
 //    public static void main(String[] args) {
 //        Scanner scan = new Scanner(System.in);

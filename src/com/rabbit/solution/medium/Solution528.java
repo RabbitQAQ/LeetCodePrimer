@@ -19,6 +19,7 @@ public class Solution528 {
         public int pickIndex() {
             // 注意区间开闭 从[0~最后一个数)
             // 这也是为什么这种解法能够成立
+            // 考虑[1,2]的例子，0，1，2中0属于1，而1和2都属于2，所以是找到第一个大于mid的数的index
             int randNum = rand.nextInt(sum[sum.length - 1]);
             int left = 0;
             int right = sum.length - 1;

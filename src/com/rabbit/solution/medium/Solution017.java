@@ -1,10 +1,43 @@
 package com.rabbit.solution.medium;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution017 {
+    public List<String> letterCombinations2(String digits) {
+        char[][] dict = new char[][] {
+                {},
+                {},
+                {'a', 'b', 'c'},
+                {'d', 'e', 'f'},
+                {'g', 'h', 'i'},
+                {'j', 'k', 'l'},
+                {'m', 'n', 'o'},
+                {'p', 'q', 'r', 's'},
+                {'t', 'u', 'v'},
+                {'w', 'x', 'y', 'z'},
+        };
+        List<String> res = new ArrayList<>();
+        dfs2(digits, 0, dict, new StringBuilder(), res);
+        return res;
+    }
+
+    public void dfs2(String digits, int index, char[][] dict, StringBuilder tmp, List<String> res) {
+        if (index == digits.length()) {
+            if (tmp.length() != 0) {
+                res.add(tmp.toString());
+            }
+            return;
+        } else {
+            int curr = digits.charAt(index) - '0';
+            for (int i = 0; i < dict[curr].length; i++) {
+                tmp.append(dict[curr][i]);
+                dfs2(digits, index + 1, dict, tmp, res);
+                tmp.deleteCharAt(tmp.length() - 1);
+            }
+        }
+    }
+
+
     public static List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
         List<String> two = new ArrayList<>(Arrays.asList("a", "b", "c"));

@@ -2,12 +2,38 @@ package com.rabbit.solution.medium;
 
 import com.rabbit.solution.utils.TreeNode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Solution199 {
+    public List<Integer> rightSideView2(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        Map<Integer, Integer> rightMap = new TreeMap<>();
+        int currDepth = 0;
+        Stack<TreeNode> nodeStack = new Stack<>();
+        Stack<Integer> depthStack = new Stack<>();
+        nodeStack.push(root);
+        depthStack.push(currDepth);
+        while (!nodeStack.isEmpty()) {
+            TreeNode currNode = nodeStack.pop();
+            int depth = depthStack.pop();
+            if (!rightMap.containsKey(depth)) {
+                rightMap.put(depth, currNode.val);
+            }
+            if (currNode.left != null) {
+                nodeStack.push(currNode.left);
+                depthStack.push(depth + 1);
+            }
+            if (currNode.right != null) {
+                nodeStack.push(currNode.right);
+                depthStack.push(depth + 1);
+            }
+        }
+
+        return new ArrayList<>(rightMap.values());
+    }
+
     public List<Integer> rightSideView(TreeNode root) {
         if (root == null) {
             return new ArrayList<>();
