@@ -2,7 +2,11 @@ package com.rabbit.solution.tests;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import java.util.List;
+
+import static com.rabbit.solution.tests.ParkingSpaceType.*;
 
 public class ParkingLotSolution {
     public static void main(String[] args) {
@@ -10,64 +14,155 @@ public class ParkingLotSolution {
     }
 }
 
-enum ParkingSlotType {
-    SMALL,
-    MEDIUM,
-    LARGE
-}
-
 abstract class Vehicle {
-    private ParkingSlotType pType;
-    private int id;
-    public Vehicle(ParkingSlotType pType) {
-        this.pType = pType;
-    }
-    public ParkingSlotType getParkingSlotType() {
-        return this.pType;
+    protected ParkingSpace pSpace;
+
+    public abstract boolean park(ParkingLot pLot);
+
+    public boolean unpark(ParkingLot pLot) {
+        if (pSpace != null) {
+            pLot.reclaimFreeSpace(pSpace);
+            return true;
+        }
+        return false;
     }
 }
 
-class ParkingSlot {
-    private long startTime;
-    private long endTime;
-    private ParkingSlotType pType;
-    public ParkingSlot(ParkingSlotType pt) {
-        this.pType = pt;
+class Cars extends Vehicle {
+
+    @Override
+    public boolean park(ParkingLot pLot) {
+        if ((pSpace = pLot.allocateFreeSpace(ParkingSpaceType.CAR)) == null)
+            return true;
+        else
+            return false;
     }
-    public void start() {
-        startTime = System.currentTimeMillis();
+}
+
+class Motorbike extends Vehicle {
+    @Override
+    public boolean park(ParkingLot pLot) {
+        if ((pSpace = pLot.allocateFreeSpace(ParkingSpaceType.MOTOBIKE)) == null)
+            return true;
+        else
+            return false;
     }
 
-    public void end() {
-        endTime = System.currentTimeMillis();
+}
+
+class HandicappedCars extends Vehicle {
+
+    @Override
+    public boolean park(ParkingLot pLot) {
+        if ((pSpace = pLot.allocateFreeSpace(ParkingSpaceType.HANDICAPPED)) == null)
+            return true;
+        else
+            return false;
+    }
+}
+
+enum ParkingSpaceType {
+    MOTOBIKE, CAR, HANDICAPPED;
+}
+
+class ParkingSpace {
+
+    private int id;
+    private ParkingSpaceType pSpaceType;
+    private ParkingMeter meter;
+
+    public ParkingSpace(int id, ParkingSpaceType pspaceType) {
+        super();
+        this.id = id;
+        this.pSpaceType = pspaceType;
     }
 
-    public double getFee() {
-        double res = (endTime - startTime) / 1000.0 / 60 * 0.1;
-        endTime = 0;
-        startTime = 0;
-        return res;
+    public int getId() {
+        return id;
     }
+
+    public void setStart() {
+        meter.start = new GregorianCalendar();
+    }
+
+    public void setEnd() {
+        meter.end = new GregorianCalendar();
+    }
+
+    public ParkingSpaceType getpSpaceType() {
+        return pSpaceType;
+    }
+
+    private class ParkingMeter {
+        public GregorianCalendar start;
+        public GregorianCalendar end;
+    }
+
+    public float getFee() {
+        return 0;
+    }
+
 }
 
 class ParkingLot {
-    LinkedList<ParkingSlot> smallSlot;
-    LinkedList<ParkingSlot> mediumSlot;
-    LinkedList<ParkingSlot> largeSlot;
+
+    private List<ParkingSpace> freeRegularSpace;
+    private List<ParkingSpace> freeCompactSpace;
+    private List<ParkingSpace> freeHandicappedSpace;
 
     public ParkingLot() {
-        this.smallSlot = new LinkedList<ParkingSlot>();
-        this.mediumSlot = new LinkedList<ParkingSlot>();
-        this.largeSlot = new LinkedList<ParkingSlot>();
     }
 
-    public boolean allocParkingSlot(Vehicle v) {
-        switch (v.getParkingSlotType()) {
-            case SMALL:break;
-            case MEDIUM:break;
-            case LARGE:break;
+    public ParkingSpace allocateFreeSpace(ParkingSpaceType pSpaceType){
+        ParkingSpace pSpace = null;
+
+        switch (pSpaceType) {
+            case MOTOBIKE:
+                if (freeRegularSpace.size() == 0)
+                    return null;
+                pSpace = freeRegularSpace.remove(0);
+                pSpace.setStart();
+                break;
+
+            case HANDICAPPED:
+                if (freeHandicappedSpace.size() == 0)
+                    return null;
+                pSpace = freeHandicappedSpace.remove(0);
+                pSpace.setStart();
+                break;
+
+            case CAR:
+                if (freeCompactSpace.size() == 0)
+                    return null;
+                pSpace = freeCompactSpace.remove(0);
+                pSpace.setStart();
+                break;
+
+            default:
+                break;
         }
-
-        return false;
+        return pSpace;
     }
+
+    public float reclaimFreeSpace(ParkingSpace Space) {
+        Space.setEnd();
+        switch (Space.getpSpaceType()) {
+            case MOTOBIKE:
+                freeRegularSpace.add(Space);
+                break;
+
+            case CAR:
+                freeCompactSpace.add(Space);
+                break;
+
+            case HANDICAPPED:
+                freeHandicappedSpace.add(Space);
+                break;
+
+            default:
+                break;
+        }
+        return Space.getFee();
+    }
+
 }
