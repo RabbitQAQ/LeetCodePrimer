@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 public class Solution295 {
     class MedianFinder {
 
+        // 这里的max和min代表的是出来大的还是出来小的，和最大堆最小堆的定义刚好反一反
         PriorityQueue<Integer> maxHeap;
         PriorityQueue<Integer> minHeap;
 

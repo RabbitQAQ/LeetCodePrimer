@@ -11,13 +11,15 @@ public class Solution033 {
             int mid = left + (right - left) / 2;
             if (nums[mid] == target) {
                 return mid;
-            } else if (nums[mid] >= nums[left]) {
+            } else if (nums[mid] >= nums[left]) { // 注意大于等于
+                // 注意小于等于
                 if (nums[left] <= target && nums[mid] > target) {
                     right = mid - 1;
                 } else {
                     left = mid + 1;
                 }
             } else {
+                // 注意大于等于
                 if (nums[mid] < target && nums[right] >= target) {
                     left = mid + 1;
                 } else {

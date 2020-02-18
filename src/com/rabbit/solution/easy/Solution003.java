@@ -4,6 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Solution003 {
+    public int lengthOfLongestSubstring5(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int maxLength = 0;
+        while (right < s.length()) {
+            char curr = s.charAt(right);
+            if (map.containsKey(curr)) {
+                if (map.get(curr) >= left) {
+                    left = map.get(curr) + 1;
+                }
+            }
+            map.put(curr, right);
+            right++;
+            maxLength = Math.max(maxLength, right - left);
+        }
+
+        return maxLength;
+    }
+
     public static int lengthOfLongestSubstring(String s) {
         int res = 0;
         int[] hashMap = new int[256];

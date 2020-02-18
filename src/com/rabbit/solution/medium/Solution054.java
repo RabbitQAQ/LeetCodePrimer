@@ -6,6 +6,108 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution054 {
+
+    public List<Integer> spiralOrder3(int[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return new ArrayList<>();
+        }
+        int left = 0;
+        int right = matrix[0].length - 1;
+        int top = 0;
+        int bottom = matrix.length - 1;
+        List<Integer> res = new ArrayList<>();
+        while (true) {
+            // to right
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            if (++top > bottom) {
+                break;
+            }
+            // to bottom
+            for (int i = top; i <= bottom; i++) {
+                res.add(matrix[i][right]);
+            }
+            if (--right < left) {
+                break;
+            }
+            // to left
+            for (int i = right; i >= left; i--) {
+                res.add(matrix[bottom][i]);
+            }
+            if (--bottom < top) {
+                break;
+            }
+            // to top
+            for (int i = bottom; i >= top; i--) {
+                res.add(matrix[i][left]);
+            }
+            if (++left > right) {
+                break;
+            }
+        }
+
+        return res;
+    }
+
+    public List<Integer> spiralOrder2(int[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return new ArrayList<>();
+        }
+        int left = 0;
+        int right = matrix[0].length - 1;
+        int up = 0;
+        int down = matrix.length - 1;
+        int x = 0;
+        int y = 0;
+        List<Integer> res = new ArrayList<>();
+        while (true) {
+            // to right
+            while (y <= right) {
+                res.add(matrix[x][y]);
+                y++;
+            }
+            y--;
+            up++;
+            if (++x > down) {
+                break;
+            }
+            // to down
+            while (x <= down) {
+                res.add(matrix[x][y]);
+                x++;
+            }
+            x--;
+            right--;
+            if (--y < left) {
+                break;
+            }
+            // to left
+            while (y >= left) {
+                res.add(matrix[x][y]);
+                y--;
+            }
+            y++;
+            down--;
+            if (--x < up) {
+                break;
+            }
+            // to up
+            while (x >= up) {
+                res.add(matrix[x][y]);
+                x--;
+            }
+            x++;
+            left++;
+            if (++y > right) {
+                break;
+            }
+        }
+
+        return res;
+    }
+
+
     public static List<Integer> spiralOrder(int[][] matrix) {
         if (matrix.length == 0) {
             return new ArrayList<>();
